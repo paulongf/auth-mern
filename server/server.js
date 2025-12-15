@@ -10,11 +10,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 connectDB();
 const allowedOrigins = [process.env.CLIENT_URL];
-app.use(cors({ origin: "/{*any}", credentials: true }));
+app.use(
+  cors({
+    origin: allowedOrigin,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/{*any}", (req, res) => {
+app.get("*", (req, res) => {
   res.send("Hello World!");
 });
 
