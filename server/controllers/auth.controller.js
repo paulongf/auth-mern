@@ -165,11 +165,11 @@ export const sendVerifyOtp = async (req, res) => {
       ),
     };
 
-    // await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
     return res.status(200).json({
       success: true,
-      message: "OTP generated (email disabled)",
+      message: "Verification OTP sent to your email",
     });
   } catch (error) {
     console.error("Error in sendVerifyOtp controller:", error);
