@@ -3,6 +3,7 @@ import {
   deleteUser,
   getAllUsers,
   getUserData,
+  updateUserRole,
 } from "../controllers/user.controller.js";
 import userAuth from "../middleware/auth.middleware.js";
 import { authorizeRoles } from "../middleware/permission.middleware.js";
@@ -17,5 +18,6 @@ userRouter.get(
   getAllUsers
 );
 userRouter.delete("/:id", userAuth, authorizeRoles("ADMIN"), deleteUser);
+userRouter.put("/:id/role", userAuth, authorizeRoles("ADMIN"), updateUserRole);
 
 export default userRouter;

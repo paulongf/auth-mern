@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 const UserStoreContext = createContext();
 
-
 export const useUserStore = () => useContext(UserStoreContext);
 
 export const UserStoreProvider = ({ children, backendUrl }) => {
@@ -15,7 +14,7 @@ export const UserStoreProvider = ({ children, backendUrl }) => {
     setLoading(true);
     try {
       const { data } = await axios.get(`${backendUrl}/api/user/all-users`, {
-        withCredentials: true, 
+        withCredentials: true,
       });
       if (data.success) setUsers(data.users);
     } catch (error) {
@@ -41,12 +40,36 @@ export const UserStoreProvider = ({ children, backendUrl }) => {
     }
   };
 
+  const updateRole = async (id, role) => {
+    try {
+      const { data } = await axios.put(
+        `${backendUrl}/api/user/${id}/role`,
+        { role },
+        { withCredentials: true }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        setUsers((prev) =>
+          prev.map((u) => (u._id === id ? { ...u, role: role } : u))
+        );
+      }
+    } catch (error) {
+      toast.error("Error updating user role");
+    }
+  };
+
   const value = {
     users,
     loading,
     fetchUsers,
     deleteUser,
+    updateRole,
   };
 
-  return <UserStoreContext.Provider value={value}>{children}</UserStoreContext.Provider>;
+  return (
+    <UserStoreContext.Provider value={value}>
+      {children}
+    </UserStoreContext.Provider>
+  );
 };

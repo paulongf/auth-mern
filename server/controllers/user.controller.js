@@ -67,3 +67,41 @@ export const deleteUser = async (req, res) => {
     });
   }
 };
+
+
+export const updateUserRole = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const { role } = req.body; 
+
+    if (!role || !["ADMIN", "MANAGER", "USER"].includes(role)) {
+      return res.status(400).json({ success: false, message: "Invalid role" });
+    }
+
+    if (req.user._id.toString() === id) {
+      return res.status(400).json({
+        success: false,
+        message: "Admin cannot change their own role",
+      });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { role },
+      { new: true, select: "-password -__v" }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Role updated to ${role}`,
+      user: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
