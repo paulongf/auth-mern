@@ -12,12 +12,14 @@ export const AppContextProvider = (props) => {
   const [userData, setUserData] = useState(false);
 
   const getUserData = async () => {
+    if (!isLoggedin) return;
     try {
       const { data } = await axios.get(backendUrl + "/api/user/data");
       data.success ? setUserData(data.userData) : toast.error(data.message);
     } catch (error) {
-      console.error("Error fetching user data:", error);
-      toast.error(error.message);
+      // console.error("Error fetching user data:", error);
+      //  toast.error(error.message);
+      console.log("No user logged in, skipping user data fetch.");
     }
   };
 
