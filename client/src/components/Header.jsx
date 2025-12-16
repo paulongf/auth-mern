@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { AppContent } from "../context/AppContext";
+import UserListAccess from "../components/UsersListAccess";
+import RoleGuad from "../components/RoleGuard";
 
 const Header = () => {
   const { userData } = useContext(AppContent);
+
+  if (!userData) return <p>Loading...</p>;
 
   return (
     <div className="flex flex-col items-center mt-20 px-4 text-center">
@@ -19,6 +23,7 @@ const Header = () => {
         Hey {userData ? userData.name : "Developer"}
         <img src={assets.hand_wave} className="w-8 aspect-square" alt="" />
       </h1>
+      <h3>Role: {userData?.role || "Guest"}</h3>
       <h2 className="text-3xl sm:text-5xl font-semibold mb-4">
         Welcome to our app
       </h2>
@@ -32,6 +37,9 @@ const Header = () => {
       >
         Get Started
       </button>
+      <RoleGuad allowedRoles={["ADMIN", "MANAGER"]}>
+        <UserListAccess />
+      </RoleGuad>
     </div>
   );
 };

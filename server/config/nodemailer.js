@@ -1,12 +1,14 @@
+
+
 import SibApiV3Sdk from "sib-api-v3-sdk";
 
-// Configura a API do Brevo
+// Config Brevo API 
 const client = SibApiV3Sdk.ApiClient.instance;
 client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
 
 const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
-// Cria um "transporter" que simula a interface do Nodemailer
+// Config transporter to mimic Nodemailer
 const transporter = {
   sendMail: async ({ from, to, subject, html }) => {
     try {
@@ -21,7 +23,7 @@ const transporter = {
       console.log("Email enviado para", to);
     } catch (err) {
       console.error("Erro ao enviar e-mail:", err);
-      throw err; // mantém o comportamento do Nodemailer
+      throw err; 
     }
   },
 };

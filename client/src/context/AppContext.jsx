@@ -12,14 +12,14 @@ export const AppContextProvider = (props) => {
   const [userData, setUserData] = useState(false);
 
   const getUserData = async () => {
-    if (!isLoggedin) return;
     try {
       const { data } = await axios.get(backendUrl + "/api/user/data");
-      data.success ? setUserData(data.userData) : toast.error(data.message);
+      if (data.success) {
+        setUserData(data.userData);
+      }
+      // se não tiver sucesso, apenas ignore (usuário não logado)
     } catch (error) {
-      // console.error("Error fetching user data:", error);
-      //  toast.error(error.message);
-      console.log("No user logged in, skipping user data fetch.");
+      // não precisa logar nada, usuário não está logado
     }
   };
 
@@ -28,10 +28,12 @@ export const AppContextProvider = (props) => {
       const { data } = await axios.get(backendUrl + "/api/auth/is-auth");
       if (data.success) {
         setIsLoggedIn(true);
-        getUserData();
       }
     } catch (error) {
-      console.error("Error checking auth state:", error);
+      // não precisa fazer nada
+    } finally {
+      // chama sempre, mesmo que o usuário não esteja logado
+      getUserData();
     }
   };
 

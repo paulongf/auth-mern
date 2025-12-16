@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
-const userAuth = (req, res, next) => {
+const userAuth = async (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {
@@ -10,14 +11,15 @@ const userAuth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (decoded.userId) {
-      req.userId = decoded.userId;
-    } else {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized, Login Again.",
-      });
+    const user = await User.findById(decoded.userId).select("-password");
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Unauthorized: user not found" });
     }
+
+    req.user = user;
+    req.userId = user._id;
 
     next();
   } catch (error) {
