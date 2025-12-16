@@ -63,7 +63,10 @@ export const register = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in register controller:", error);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Register Controller",
+    });
   }
 };
 
@@ -107,7 +110,10 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in login controller:", error);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Login Controller",
+    });
   }
 };
 
@@ -124,7 +130,10 @@ export const logout = (req, res) => {
     });
   } catch (error) {
     console.error("Error in logout controller:", error);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Logout Controller",
+    });
   }
 };
 
@@ -156,15 +165,18 @@ export const sendVerifyOtp = async (req, res) => {
       ),
     };
 
-    await transporter.sendMail(mailOptions);
+    // await transporter.sendMail(mailOptions);
 
     return res.status(200).json({
       success: true,
-      message: "Verification OTP sent to your email",
+      message: "OTP generated (email disabled)",
     });
   } catch (error) {
     console.error("Error in sendVerifyOtp controller:", error);
-    return res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message + "Error Send Verify OTP Controller",
+    });
   }
 };
 
@@ -204,7 +216,10 @@ export const verifyEmail = async (req, res) => {
       .json({ success: true, message: "Email verified successfully" });
   } catch (error) {
     console.error("Error in verifyEmail controller:", error);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Verify Email Controller",
+    });
   }
 };
 
@@ -215,7 +230,10 @@ export const isAuthenticated = async (req, res) => {
       .status(200)
       .json({ success: true, message: "User is authenticated" });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Is Authenticated Controller",
+    });
   }
 };
 
@@ -258,7 +276,10 @@ export const sendResetOtp = async (req, res) => {
       message: "Password reset OTP sent to your email",
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Send Reset OTP Controller",
+    });
   }
 };
 
@@ -295,6 +316,9 @@ export const resetPassword = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Password reset successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message + "Error Reset Password Controller",
+    });
   }
 };
