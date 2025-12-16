@@ -8,29 +8,31 @@ import { toast } from "react-toastify";
 
 const EmailVerify = () => {
   axios.defaults.withCredentials = true;
-  const {backendUrl, isLoggedin, userData, getUserData} = useContext(AppContent);
+  const { backendUrl, isLoggedin, userData, getUserData } =
+    useContext(AppContent);
   const navigate = useNavigate();
   const inputRefs = React.useRef([]);
 
   const onSubmitHandler = async (e) => {
-   
     try {
-       e.preventDefault();
-       const otpArray = inputRefs.current.map((input) => input.value);
-       const otp = otpArray.join("");
+      e.preventDefault();
+      const otpArray = inputRefs.current.map((input) => input.value);
+      const otp = otpArray.join("");
 
-       const {data} = await axios.post(backendUrl + '/api/auth/verify-account', {otp});
+      const { data } = await axios.post(
+        backendUrl + "/api/auth/verify-account",
+        { otp }
+      );
 
-       if(data.success){
-         toast.success(data.message);
-         getUserData();
-         navigate('/');
-       }else{
-          toast.error(data.message);
-       }
+      if (data.success) {
+        toast.success(data.message);
+        getUserData();
+        navigate("/");
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
-      toast.error(error.message);
-      
+      toast.error(error.message + " Error in Email Verify Page");
     }
   };
 
@@ -59,8 +61,6 @@ const EmailVerify = () => {
   useEffect(() => {
     isLoggedin && userData && userData.isAccountVerified && navigate("/");
   }, [isLoggedin, userData]);
-
- 
 
   return (
     <div

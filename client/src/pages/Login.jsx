@@ -40,7 +40,7 @@ const Login = () => {
     } catch (error) {
       const message = error.response?.data?.message || error.message;
 
-      toast.error(error.message);
+      toast.error(error.message + " Error in Login/Register Page");
     }
   };
 

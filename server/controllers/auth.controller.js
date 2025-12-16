@@ -54,7 +54,11 @@ export const register = async (req, res) => {
       ),
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending welcome email:", error.message);
+    }
 
     res.status(201).json({
       success: true,
