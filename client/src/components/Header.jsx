@@ -7,8 +7,6 @@ import RoleGuad from "../components/RoleGuard";
 const Header = () => {
   const { userData } = useContext(AppContent);
 
-  if (!userData) return <p>Loading...</p>;
-
   return (
     <div className="flex flex-col items-center mt-20 px-4 text-center">
       <img
