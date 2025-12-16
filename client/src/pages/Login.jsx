@@ -38,8 +38,7 @@ const Login = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      const message = error.response?.data?.message || error.message;
-
+      console.error("Error in Login/Register:", error);
       toast.error(error.message + " Error in Login/Register Page");
     }
   };
