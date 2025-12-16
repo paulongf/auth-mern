@@ -17,7 +17,7 @@ export const AppContextProvider = (props) => {
       data.success ? setUserData(data.userData) : toast.error(data.message);
     } catch (error) {
       console.error("Error fetching user data:", error);
-      toast.error(data.message);
+      toast.error(error.message);
     }
   };
 
