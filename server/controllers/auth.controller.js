@@ -89,7 +89,9 @@ export const login = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select(
+      "+password name email isAccountVerified"
+    );
     if (!user) {
       return res.status(400).json({ success: false, message: "Invalid email" });
     }
@@ -313,7 +315,9 @@ export const resetPassword = async (req, res) => {
       .json({ success: false, message: "All fields are required" });
   }
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select(
+      "+password resetOtp resetOtpExpiryAt"
+    );
     if (!user) {
       return res
         .status(400)
