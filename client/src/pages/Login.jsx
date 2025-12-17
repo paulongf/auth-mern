@@ -39,7 +39,11 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error in Login/Register:", error);
-      toast.error(error.message + " Error in Login/Register Page");
+
+      const backendMessage =
+        error.response?.data?.message || "Unexpected error";
+
+        toast.error(backendMessage);
     }
   };
 
