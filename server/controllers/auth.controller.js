@@ -58,10 +58,17 @@ export const register = async (req, res) => {
       console.error("Email error:", error.message);
     });
 
+    const safeUser = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAccountVerified: user.isAccountVerified,
+    };
+
     res.status(201).json({
       success: true,
       message: "User registered successfully",
-      user: user,
+      user: safeUser,
     });
   } catch (error) {
     console.error("Error in register controller:", error);
@@ -105,10 +112,17 @@ export const login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
+    const safeUser = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAccountVerified: user.isAccountVerified,
+    };
+
     return res.status(200).json({
       success: true,
       message: "Logged in successfully",
-      user: user,
+      user: safeUser,
     });
   } catch (error) {
     console.error("Error in login controller:", error);
