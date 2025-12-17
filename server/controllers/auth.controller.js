@@ -54,11 +54,9 @@ export const register = async (req, res) => {
       ),
     };
 
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (error) {
-      console.error("Error sending welcome email:", error.message);
-    }
+    transporter.sendMail(mailOptions).catch((error) => {
+      console.error("Email error:", error.message);
+    });
 
     res.status(201).json({
       success: true,
@@ -169,11 +167,9 @@ export const sendVerifyOtp = async (req, res) => {
       ),
     };
 
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (emailError) {
-      console.error("Email error:", emailError.message);
-    }
+    transporter.sendMail(mailOptions).catch((error) => {
+      console.error("Email error:", error.message);
+    });
 
     return res.status(200).json({
       success: true,
@@ -278,11 +274,10 @@ export const sendResetOtp = async (req, res) => {
       ),
     };
 
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (emailError) {
-      console.error("Email error:", emailError.message);
-    }
+    transporter.sendMail(mailOptions).catch((error) => {
+      console.error("Email error:", error.message);
+    });
+
     return res.status(200).json({
       success: true,
       message: "Password reset OTP sent to your email",
