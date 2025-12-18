@@ -2,7 +2,13 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 const userAuth = async (req, res, next) => {
-  const { token } = req.cookies;
+  // Primeiro tenta pegar o token do cookie
+  let token = req.cookies?.token;
+
+  // Se não tiver no cookie, tenta pegar do header Authorization (Bearer)
+  if (!token && req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
   if (!token) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -23,7 +29,7 @@ const userAuth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(401).json({ success: false, message: error.message });
+    return res.status(401).json({ success: false, message: "Invalid or expired token" });
   }
 };
 

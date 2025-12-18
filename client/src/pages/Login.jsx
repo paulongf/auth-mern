@@ -40,6 +40,7 @@ const Login = () => {
       const { data } = await api.post(endpoint, payload);
 
       if (data.success) {
+        localStorage.setItem("token", data.token);
         setIsLoggedIn(true);
         await getUserData();
         navigate("/");
