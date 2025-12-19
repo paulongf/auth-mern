@@ -2,10 +2,9 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 const userAuth = async (req, res, next) => {
-  // Primeiro tenta pegar o token do cookie
+
   let token = req.cookies?.token;
 
-  // Se não tiver no cookie, tenta pegar do header Authorization (Bearer)
   if (!token && req.headers.authorization?.startsWith("Bearer ")) {
     token = req.headers.authorization.split(" ")[1];
   }

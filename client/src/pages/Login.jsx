@@ -37,12 +37,11 @@ const Login = () => {
           ? form
           : { email: form.email, password: form.password };
 
-      const { data } = await api.post(endpoint, payload);
+      const { data } = await api.post(endpoint, payload); // 🍪 cookie salvo aqui
 
       if (data.success) {
-        localStorage.setItem("token", data.token);
         setIsLoggedIn(true);
-        await getUserData();
+        await getUserData(); // 🔥 agora funciona no mobile
         navigate("/");
         toast.success(data.message);
       } else {

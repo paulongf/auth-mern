@@ -47,6 +47,7 @@ export const register = async (req, res) => {
       secure: true, // SEMPRE true em produção
       sameSite: "none", // SEMPRE none
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/",
     });
 
     // Sending welcome email
@@ -124,6 +125,7 @@ export const login = async (req, res) => {
       secure: true, // SEMPRE true em produção
       sameSite: "none", // SEMPRE none
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/",
     });
 
     const safeUser = {
